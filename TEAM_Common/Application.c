@@ -15,6 +15,7 @@
 #include "KeyDebounce.h"
 #include "CLS1.h"
 #include "KIN1.h"
+
 #if PL_CONFIG_HAS_KEYS
   #include "Keys.h"
 #endif
@@ -96,6 +97,7 @@ void APP_EventHandler(EVNT_Handle event) {
 #if PL_CONFIG_NOF_KEYS>=1
   case EVNT_SW1_PRESSED:
     BtnMsg(1, "pressed");
+    LED1_Neg();						// for testing reasons
      break;
 #endif
     default:
@@ -190,10 +192,29 @@ void APP_Start(void) {
   WAIT1_Waitms(500);
   EVNT_HandleEvent(APP_EventHandler,TRUE);
 
+  int cnt = 0;
 
   for(;;) {
 	  WAIT1_Waitms(100);
 	  EVNT_HandleEvent(APP_EventHandler,TRUE);
+
+	  //if (KEY1_Get()) {
+		//  WAIT1_Waitms(50); /* simple debounce */
+		//  if (KEY1_Get()) { /* still pressed? */
+		//	  cnt = 0;
+		//	  while(KEY1_Get()) {
+		//		  WAIT1_Waitms(1);
+		//		  cnt++; /* measure time */
+		//	  } /* wait until released */
+		//	  if (cnt<=1000) { /* short press*/
+		//		  EVNT_SetEvent(EVNT_SW1_PRESSED);
+		//	  } else { /* long press*/
+		//		  EVNT_SetEvent(EVNT_SW1_PRESSED);
+		//	  }
+		//  }
+	 // }
+	//  EVNT_HandleEvent(APP_EventHandler,TRUE);
+
   }
 }
 
