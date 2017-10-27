@@ -110,7 +110,7 @@ void TI1_OnInterrupt(void)
 */
 void SW1_OnInterrupt(void)
 {
-  KEY_Scan();
+	KEY_OnInterrupt(KEY_BTN1);
 }
 
 /* END Events */
