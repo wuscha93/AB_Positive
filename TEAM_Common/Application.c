@@ -187,16 +187,28 @@ void APP_Start(void) {
   APP_AdoptToHardware();
   __asm volatile("cpsie i"); /* enable interrupts */
 
-  EVNT_SetEvent(EVNT_STARTUP);						// LED1 blinks 5 times
 
-  WAIT1_Waitms(500);
+  EVNT_SetEvent(EVNT_STARTUP);						// LED1 blinks 5 times
   EVNT_HandleEvent(APP_EventHandler,TRUE);
 
-  int cnt = 0;
+  /*startup for ROBO only*/
+#if PL_CONFIG_BOARD_IS_ROBO
+  BUZ_PlayTune(BUZ_TUNE_MARIO);
+#endif
+
+  /*startup for REMOTE ONLY*/
+#if PL_CONFIG_BOARD_IS_REMOTE
+#endif
 
   for(;;) {
-	  WAIT1_Waitms(100);
+
+	  /*Key process routine for Polling*/
+	  //KEY_Scan();
+
+	  /*Event Handler for all events*/
 	  EVNT_HandleEvent(APP_EventHandler,TRUE);
+
+
 
 	  //if (KEY1_Get()) {
 		//  WAIT1_Waitms(50); /* simple debounce */

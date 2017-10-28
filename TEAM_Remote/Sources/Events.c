@@ -35,6 +35,8 @@ extern "C" {
 
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
+#include "Keys.h"
+#include "Trigger.h"
 /*
 ** ===================================================================
 **     Event       :  Cpu_OnNMIINT (module Events)
@@ -70,7 +72,8 @@ void Cpu_OnNMIINT(void)
 */
 void TI1_OnInterrupt(void)
 {
-  /* Write your code here ... */
+	/* Ticker-counter for trigger -> time base in Trigger.h */
+	TRG_AddTick();
 }
 
 /* END Events */

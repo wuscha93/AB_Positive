@@ -67,6 +67,58 @@ static const BUZ_Tune MelodyWelcome[] =
     {0,100},
 };
 
+static const BUZ_Tune Mario[] =
+{ /* freq, ms */
+    {330,100},
+    {0,150},
+    {330,100},
+    {0,300},
+    {330,300},
+    {0,300},
+    {275,100},
+    {0,100},
+    {330,100},
+	{0,300},
+    {385,100},
+	{0,550},
+    {190,100},
+    {0,575},
+	{255,100},
+	{0,450},
+	{190,100},
+	{0,400},
+	{160,100},
+	{0,500},
+	{220,100},
+	{0,300},
+	{240,80},
+	{0,330},
+	{225,100},
+	{0,150},
+	{215,100},
+	{0,300},
+	{190,100},
+	{0,200},
+	{330,80},
+	{0,200},
+	{380,50},
+	{0,150},
+	{430,100},
+	{0,300},
+	{350,80},
+	{0,150},
+	{380,50},
+	{0,350},
+	{330,80},
+	{0,300},
+	{260,80},
+	{0,150},
+	{290,80},
+	{0,150},
+	{240,80},
+	{0,500},
+};
+
 static const BUZ_Tune MelodyButton[] =
 { /* freq, ms */
     {200,100},
@@ -95,6 +147,7 @@ static MelodyDesc BUZ_Melodies[] = {
   {0, sizeof(MelodyWelcome)/sizeof(MelodyWelcome[0]),         {0, 0}, MelodyWelcome}, /* BUZ_TUNE_WELCOME */
   {0, sizeof(MelodyButton)/sizeof(MelodyButton[0]),           {0, 0}, MelodyButton}, /* BUZ_TUNE_BUTTON */
   {0, sizeof(MelodyButtonLong)/sizeof(MelodyButtonLong[0]),   {0, 0}, MelodyButtonLong}, /* BUZ_TUNE_BUTTON_LONG */
+  {0, sizeof(Mario)/sizeof(Mario[0]),						  {0, 0}, Mario},
 };
 
 static void BUZ_Toggle(void *dataPtr) {

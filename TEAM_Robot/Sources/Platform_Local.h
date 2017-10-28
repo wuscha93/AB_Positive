@@ -19,7 +19,7 @@
 #define PL_LOCAL_CONFIG_NOF_KEYS          (1) /* number of keys, 0 to 7 */
 
 #if PL_LOCAL_CONFIG_NOF_KEYS>0
-  #define PL_LOCAL_CONFIG_KEY_1_ISR         (0) /* if SW1 is using interrupts */
+  #define PL_LOCAL_CONFIG_KEY_1_ISR         (1) /* if SW1 is using interrupts */
   #define PL_LOCAL_CONFIG_KEY_2_ISR         (0) /* if SW2 is using interrupts */
   #define PL_LOCAL_CONFIG_KEY_3_ISR         (0) /* if SW3 is using interrupts */
   #define PL_LOCAL_CONFIG_KEY_4_ISR         (0) /* if SW4 is using interrupts */
@@ -34,7 +34,7 @@
 //#define PL_LOCAL_CONFIG_HAS_TIMER_DISABLED                /* disable own timer */
 //#define PL_LOCAL_CONFIG_HAS_KEYS_DISABLED                 /* disable key/push buttons */
 #define PL_LOCAL_CONFIG_HAS_SHELL_DISABLED                /* disable shell */
-#define PL_LOCAL_CONFIG_HAS_TRIGGER_DISABLED              /* disable triggers */
+//#define PL_LOCAL_CONFIG_HAS_TRIGGER_DISABLED              /* disable triggers */
 #define PL_LOCAL_CONFIG_HAS_DEBOUNCE_DISABLED             /* disable debouncing */
 #define PL_LOCAL_CONFIG_HAS_RTOS_DISABLED                 /* disable RTOS usage */
 #define PL_LOCAL_CONFIG_HAS_SEGGER_RTT_DISABLED           /* disable Segger RTT */
@@ -55,7 +55,7 @@
 #define PL_LOCAL_CONFIG_HAS_SNAKE_GAME_DISABLED           /* disable snake game */
 
 /* robot hardware functionality */
-#define PL_LOCAL_CONFIG_HAS_BUZZER_DISABLED               /* disable buzzer (only on robot) */
+//#define PL_LOCAL_CONFIG_HAS_BUZZER_DISABLED               /* disable buzzer (only on robot) */
 #define PL_LOCAL_CONFIG_HAS_REFLECTANCE_DISABLED          /* disable IR reflectance sensor */
 #define PL_LOCAL_CONFIG_HAS_BLUETOOTH_DISABLED            /* disable Bluetooth */
 #define PL_LOCAL_CONFIG_HAS_MOTOR_DISABLED                /* disable motor */
