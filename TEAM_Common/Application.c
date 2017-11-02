@@ -100,6 +100,42 @@ void APP_EventHandler(EVNT_Handle event) {
     LED1_Neg();						// for testing reasons
      break;
 #endif
+#if PL_CONFIG_NOF_KEYS>=2
+  case EVNT_SW2_PRESSED:
+    BtnMsg(2, "pressed");
+    LED1_Neg();						// for testing reasons
+     break;
+#endif
+#if PL_CONFIG_NOF_KEYS>=3
+  case EVNT_SW3_PRESSED:
+    BtnMsg(3, "pressed");
+    LED1_Neg();						// for testing reasons
+     break;
+#endif
+#if PL_CONFIG_NOF_KEYS>=4
+  case EVNT_SW4_PRESSED:
+    BtnMsg(4, "pressed");
+    LED1_Neg();						// for testing reasons
+     break;
+#endif
+#if PL_CONFIG_NOF_KEYS>=5
+  case EVNT_SW5_PRESSED:
+    BtnMsg(5, "pressed");
+    LED1_Neg();						// for testing reasons
+     break;
+#endif
+#if PL_CONFIG_NOF_KEYS>=6
+  case EVNT_SW6_PRESSED:
+    BtnMsg(6, "pressed");
+    LED1_Neg();						// for testing reasons
+     break;
+#endif
+#if PL_CONFIG_NOF_KEYS>=7
+  case EVNT_SW7_PRESSED:
+    BtnMsg(7, "pressed");
+    LED1_Neg();						// for testing reasons
+     break;
+#endif
     default:
       break;
    } /* switch */
@@ -208,7 +244,7 @@ void APP_Start(void) {
 	  /*Event Handler for all events*/
 	  EVNT_HandleEvent(APP_EventHandler,TRUE);
 
-
+	  KEY_Scan();
 
 	  //if (KEY1_Get()) {
 		//  WAIT1_Waitms(50); /* simple debounce */
