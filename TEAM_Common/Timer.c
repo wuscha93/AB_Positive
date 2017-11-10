@@ -25,6 +25,8 @@
 void TMR_OnInterrupt(void) {
   static unsigned int cntr = 0;
 
+  TRG_AddTick();
+
   /* this one gets called from an interrupt!!!! */
   cntr++;
   if (cntr == (1000/TMR_TICK_MS)) {					// set event every 500 ms

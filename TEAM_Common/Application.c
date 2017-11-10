@@ -79,17 +79,24 @@ static void BtnMsg(int btn, const char *msg) {
 }
 
 void APP_EventHandler(EVNT_Handle event) {
-  /*! \todo handle events */
   switch(event) {
   case EVNT_STARTUP:
-    {
+  {
       int i;
       for (i=0;i<5;i++) {
         LED1_Neg();
         WAIT1_Waitms(50);
       }
       LED1_Off();
-    }
+/* Startup for ROBO ONLY */
+#if	PL_CONFIG_BOARD_IS_ROBO
+      BUZ_PlayTune(BUZ_THREE_BEEP);
+#endif
+
+/* Startup for REMOTE ONLY */
+#if PL_CONFIG_BOARD_IS_REMOTE
+#endif
+  }
     break;
   case EVNT_LED_HEARTBEAT:
     LED2_Neg();
@@ -218,23 +225,65 @@ static void APP_AdoptToHardware(void) {
 #endif
 }
 
+static void BlinkyTask (void *pvParameters) {
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+	for(;;) {
+		LED1_Neg();
+		vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(100));
+	}
+}
+
+
+static void MyAppTask(void *pvParam) {
+	  for(;;)
+	    {
+	#if PL_CONFIG_HAS_DEBOUNCE
+	    KEYDBNC_Process();
+	#else
+	    KEY_Scan(); /* scan keys and set events */
+	#endif
+	    EVNT_HandleEvent(APP_EventHandler, TRUE);
+	    vTaskDelay(pdMS_TO_TICKS(10));
+	    }
+}
+
 void APP_Start(void) {
   PL_Init();
   APP_AdoptToHardware();
   __asm volatile("cpsie i"); /* enable interrupts */
 
+  EVNT_SetEvent(EVNT_STARTUP);						// set startup event (5x LED1 + BUZ)
 
-  EVNT_SetEvent(EVNT_STARTUP);						// LED1 blinks 5 times
-  EVNT_HandleEvent(APP_EventHandler,TRUE);
+/*##################create Blinky task###################*/
+  /* elaborate task creation method*/
+  BaseType_t res;
+  xTaskHandle tskHndl;
+  /* Start Blinky Task */
+  res =   xTaskCreate(BlinkyTask,     /* function */
+      "BlinkyTask",                   /* Kernel awarness name */
+      configMINIMAL_STACK_SIZE,       /* stack in Bytes*/
+      (void*) NULL,                   /* task parameter */
+      tskIDLE_PRIORITY,               /* priority */
+      &tskHndl                        /* handle */
+      );
+if (res != pdPASS) {/*Error Handling*/}
+/*####################end Blinky task####################*/
 
-  /*startup for ROBO only*/
-#if PL_CONFIG_BOARD_IS_ROBO
-  BUZ_PlayTune(BUZ_TUNE_MARIO);
-#endif
 
-  /*startup for REMOTE ONLY*/
-#if PL_CONFIG_BOARD_IS_REMOTE
-#endif
+/*##################create App task###################*/
+  /* elegant task creation method */
+  if (xTaskCreate(MyAppTask, "App", 100, NULL,
+      1, NULL) != pdPASS)
+  {/*Error Handling*/}
+/*####################end App task####################*/
+
+
+
+
+
+
+
+ vTaskStartScheduler(); /* no code below this will be executed as long scheduler is running */
 
   for(;;) {
 
@@ -242,9 +291,9 @@ void APP_Start(void) {
 	  //KEY_Scan();
 
 	  /*Event Handler for all events*/
-	  EVNT_HandleEvent(APP_EventHandler,TRUE);
+	  //EVNT_HandleEvent(APP_EventHandler,TRUE);
 
-	  KEY_Scan();
+	  //KEY_Scan();
 
 	  //if (KEY1_Get()) {
 		//  WAIT1_Waitms(50); /* simple debounce */
@@ -262,6 +311,7 @@ void APP_Start(void) {
 		//  }
 	 // }
 	//  EVNT_HandleEvent(APP_EventHandler,TRUE);
+
 
   }
 }

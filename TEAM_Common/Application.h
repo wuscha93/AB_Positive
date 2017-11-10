@@ -15,6 +15,11 @@
 #include "Event.h"
 
 void APP_EventHandler(EVNT_Handle event);
+
+static void BlinkyTask(void*);
+
+static void MyAppTask(void*);
+
 #endif
 
 void APP_Start(void);
