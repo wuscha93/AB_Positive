@@ -174,7 +174,7 @@ void APP_EventHandler(EVNT_Handle event) {
   case EVNT_SW7_LPRESSED:
     BtnMsg(7, "long pressed");
      break;
-  case EVNT_SW17_RELEASED:
+  case EVNT_SW7_RELEASED:
     BtnMsg(7, "released");
      break;
 #endif
