@@ -67,6 +67,7 @@ void DBNC_Process(DBNC_FSMData *data) {
           return;
         } else { /* we got another key set pressed */
           /*! \todo Here it goes to the next state */
+          data->onDebounceEvent(DBNC_EVENT_PRESSED, keys & ~(data->scanValue));
           data->state = DBNC_KEY_RELEASE;
         }
         break;
