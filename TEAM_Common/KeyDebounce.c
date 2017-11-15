@@ -14,7 +14,7 @@
 #include "Trigger.h"
 #include "Event.h"
 #include "FRTOS1.h"
-#include "SYS1.h"
+//#include "SYS1.h"
 
 /*!
  * \brief Returns the state of the keys. This directly reflects the value of the port
@@ -76,7 +76,7 @@ static void KEYDBNC_OnDebounceEvent(DBNC_EventKinds event, DBNC_KeySet keys) {
     UTIL1_strcat(buf, sizeof(buf), ", keys: ");
     UTIL1_strcatNum32u(buf, sizeof(buf), keys);
     UTIL1_strcat(buf, sizeof(buf), "\r\n");
-    SYS1_Print(buf);
+    //SYS1_Print(buf);
   }
 #endif
   switch(event) {
