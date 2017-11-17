@@ -381,21 +381,24 @@ static void ShellTask(void *pvParameters) {
 #endif
 #if PL_CONFIG_HAS_SHELL_QUEUE && PL_CONFIG_SQUEUE_SINGLE_CHAR
     {
-        unisgned char ch;
+        /*! \todo Handle shell queue */
+      unsigned char ch;             //return value of SQUEUE_ReceiveChar
 
-        while((ch=SQUEUE_ReceiveChar()) && ch!= '\0') {
-        	ios[0]-stdio->StdOut(ch);	/* output on first channel */
-        }
+      while ((ch=SQUEUE_ReceiveChar()) && ch!='\0')
+      {
+        ios[0].stdio->stdOut(ch); /*Output on first channel */
+      }
     }
 #elif PL_CONFIG_HAS_SHELL_QUEUE /* !PL_CONFIG_SQUEUE_SINGLE_CHAR */
     {
-      const unsigned char *msg;
+        const unsigned char *msg;
 
-      msg = SQUEUE_ReceiveMessage();
-      if(msg!=NULL) {
-    	  CLS1_SendStr(msg, ios[0].stdio->stdOut);
-    	  vPortFree((void*)msg);
-      }
+        msg = SQUEUE_ReceiveMessage();
+        if (msg!=NULL)
+        {
+          CLS1_SendStr(msg, ios[0].stdio->stdOut);
+          vPortFree((void*)msg);
+        }
    }
 #endif /* PL_CONFIG_HAS_SHELL_QUEUE */
     vTaskDelay(pdMS_TO_TICKS(10));
