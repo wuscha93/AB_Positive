@@ -12,7 +12,13 @@
 #include "Platform.h" /* interface to the platform */
 #if PL_CONFIG_HAS_SEMAPHORE
 /*! \brief Initialization of the module */
+
+void sharedWarehouse(unsigned char*);
+
+
 void SEM_Init(void);
+
+
 
 /*! \brief Deinitialization of the module */
 void SEM_Deinit(void);
