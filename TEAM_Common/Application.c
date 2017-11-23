@@ -278,7 +278,7 @@ static void MyAppTask(void *pvParam) {
 	    KEY_Scan(); /* scan keys and set events */
 	#endif
 	    EVNT_HandleEvent(APP_EventHandler, TRUE);
-	    vTaskDelay(pdMS_TO_TICKS(10));
+	    vTaskDelay(pdMS_TO_TICKS(100));
 	    }
 }
 
@@ -296,12 +296,12 @@ void APP_Start(void) {
   /* Start Blinky Task */
   res =   xTaskCreate(BlinkyTask,     /* function */
       "BlinkyTask",                   /* Kernel awarness name */
-      configMINIMAL_STACK_SIZE,       /* stack in Bytes*/
+      configMINIMAL_STACK_SIZE+100,       /* stack in Bytes*/
       (void*) NULL,                   /* task parameter */
       tskIDLE_PRIORITY,               /* priority */
       &tskHndl                        /* handle */
       );
-if (res != pdPASS) {/*Error Handling*/}
+  if (res != pdPASS) {/*Error Handling*/}
 /*####################end Blinky task####################*/
 
 
@@ -311,11 +311,6 @@ if (res != pdPASS) {/*Error Handling*/}
       1, NULL) != pdPASS)
   {/*Error Handling*/}
 /*####################end App task####################*/
-
-
-
-
-
 
 
  vTaskStartScheduler(); /* no code below this will be executed as long scheduler is running */
