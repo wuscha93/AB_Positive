@@ -160,14 +160,14 @@ static void REF_MeasureRaw(SensorTimeType raw[REF_NOF_SENSORS]) {
     cnt = 0;
     for(i=0;i<REF_NOF_SENSORS;i++) {
       if (raw[i]==MAX_SENSOR_VALUE) { /* not measured yet? */
-        if (SensorFctArray[i].GetVal()==0) {
+        if (SensorFctArray[i].GetVal()==0 || (timerVal>=(RefCnt_CNT_INP_FREQ_R_0/333)) ) {
           raw[i] = (uint16_t)timerVal;
         }
       } else { /* have value */
         cnt++;
       }
     }
-  } while(cnt!=REF_NOF_SENSORS);
+  } while(cnt!=REF_NOF_SENSORS /*&& timerVal<(RefCnt_CNT_INP_FREQ_R_0/1000)*/);
   taskEXIT_CRITICAL();
   LED_IR_Off(); /* IR LED's off */
 }

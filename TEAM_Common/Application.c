@@ -104,9 +104,14 @@ void APP_EventHandler(EVNT_Handle event) {
 #if PL_CONFIG_NOF_KEYS>=1
   case EVNT_SW1_PRESSED:
     BtnMsg(1, "pressed");
+    if(!REF_IsReady()){
+    	REF_CalibrateStartStop();
+    }
      break;
   case EVNT_SW1_LPRESSED:
     BtnMsg(1, "long pressed");
+    WAIT1_Waitms(500);
+    LF_StartFollowing();
      break;
   case EVNT_SW1_RELEASED:
     BtnMsg(1, "released");
@@ -260,11 +265,35 @@ static void APP_AdoptToHardware(void) {
 #endif
 }
 
+
+
 static void BlinkyTask (void *pvParameters) {
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	for(;;) {
 		LED1_Neg();
 		vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(100));
+	}
+}
+
+static void RoboControlTask (void *pvParameters) {
+
+	for(;;) {
+		/*while(!REF_IsReady());			// wait until calibrated
+		if(REF_IsReady()) {
+
+
+			if(REF_GetLineValue() < 500){	// white area - turn Robot for 600ms
+				MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_LEFT),-40);
+				MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_RIGHT),40);
+
+				vTaskDelay(pdMS_TO_TICKS(600));
+			}
+			else {							// black area - drive
+				MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_LEFT),30);
+				MOT_SetSpeedPercent(MOT_GetMotorHandle(MOT_MOTOR_RIGHT),30);
+			}
+		}*/
+		vTaskDelay(pdMS_TO_TICKS(100));
 	}
 }
 
@@ -298,11 +327,26 @@ void APP_Start(void) {
       "BlinkyTask",                   /* Kernel awarness name */
       configMINIMAL_STACK_SIZE+100,       /* stack in Bytes*/
       (void*) NULL,                   /* task parameter */
-      tskIDLE_PRIORITY,               /* priority */
+      tskIDLE_PRIORITY+2,               /* priority */
       &tskHndl                        /* handle */
       );
   if (res != pdPASS) {/*Error Handling*/}
 /*####################end Blinky task####################*/
+
+/*##################Robot Control task###################*/
+  /* elaborate task creation method*/
+  BaseType_t res2;
+  xTaskHandle tskHndl2;
+  /* Start RoboControl Task */
+  res2 =   xTaskCreate(RoboControlTask,     	/* function */
+      "RoboControlTask",                   	/* Kernel awarness name */
+      configMINIMAL_STACK_SIZE+100,       	/* stack in Bytes*/
+      (void*) NULL,                   		/* task parameter */
+      tskIDLE_PRIORITY,              	 	/* priority */
+      &tskHndl2                        		/* handle */
+      );
+  if (res2 != pdPASS) {/*Error Handling*/}
+/*##################Robot Control task####################*/
 
 
 /*##################create App task###################*/
@@ -315,35 +359,7 @@ void APP_Start(void) {
 
  vTaskStartScheduler(); /* no code below this will be executed as long scheduler is running */
 
-  for(;;) {
-
-	  /*Key process routine for Polling*/
-	  //KEY_Scan();
-
-	  /*Event Handler for all events*/
-	  //EVNT_HandleEvent(APP_EventHandler,TRUE);
-
-	  //KEY_Scan();
-
-	  //if (KEY1_Get()) {
-		//  WAIT1_Waitms(50); /* simple debounce */
-		//  if (KEY1_Get()) { /* still pressed? */
-		//	  cnt = 0;
-		//	  while(KEY1_Get()) {
-		//		  WAIT1_Waitms(1);
-		//		  cnt++; /* measure time */
-		//	  } /* wait until released */
-		//	  if (cnt<=1000) { /* short press*/
-		//		  EVNT_SetEvent(EVNT_SW1_PRESSED);
-		//	  } else { /* long press*/
-		//		  EVNT_SetEvent(EVNT_SW1_PRESSED);
-		//	  }
-		//  }
-	 // }
-	//  EVNT_HandleEvent(APP_EventHandler,TRUE);
-
-
-  }
+  for(;;) {}
 }
 
 

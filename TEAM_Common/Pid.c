@@ -260,7 +260,7 @@ void PID_Pos(int32_t currPos, int32_t setPos, bool isLeft) {
 static void PID_PrintHelp(const CLS1_StdIOType *io) {
   CLS1_SendHelpStr((unsigned char*)"pid", (unsigned char*)"Group of PID commands\r\n", io->stdOut);
   CLS1_SendHelpStr((unsigned char*)"  help|status", (unsigned char*)"Shows PID help or status\r\n", io->stdOut);
-  CLS1_SendHelpStr((unsigned char*)"  speed (L|R) (p|d|i|w) <val>", (unsigned char*)"Sets P, D, I or anti-windup position value\r\n", io->stdOut);
+  CLS1_SendHelpStr((unsigned char*)"  speed (L|R) (p|d|i|w) <val>", (unsigned char*)"Sets P, D, I or anti-windup speed value\r\n", io->stdOut);
   CLS1_SendHelpStr((unsigned char*)"  speed (L|R) speed <value>", (unsigned char*)"Maximum speed % value\r\n", io->stdOut);
   CLS1_SendHelpStr((unsigned char*)"  pos (L|R) (p|d|i|w) <val>", (unsigned char*)"Sets P, D, I or anti-windup position value\r\n", io->stdOut);
   CLS1_SendHelpStr((unsigned char*)"  pos speed <value>", (unsigned char*)"Maximum speed % value\r\n", io->stdOut);
@@ -428,8 +428,8 @@ uint8_t PID_ParseCommand(const unsigned char *cmd, bool *handled, const CLS1_Std
     if (res!=ERR_OK) {
       CLS1_SendStr((unsigned char*)"Loading from FLASH failed!\r\n", io->stdErr);
     }
-  }
 #endif
+  }
   return res;
 }
 #endif /* PL_HAS_SHELL */
@@ -455,11 +455,11 @@ void PID_Deinit(void) {
 
 void PID_Init(void) {
   /*! \todo determine your PID values */
-  config.speedLeftConfig.pFactor100 = 0;
-  config.speedLeftConfig.iFactor100 = 0;
+  config.speedLeftConfig.pFactor100 = 500;
+  config.speedLeftConfig.iFactor100 = 40;
   config.speedLeftConfig.dFactor100 = 0;
-  config.speedLeftConfig.iAntiWindup = 0;
-  config.speedLeftConfig.maxSpeedPercent = 0;
+  config.speedLeftConfig.iAntiWindup = 65000;
+  config.speedLeftConfig.maxSpeedPercent = 100;
   config.speedLeftConfig.lastError = 0;
   config.speedLeftConfig.integral = 0;
 
@@ -467,22 +467,23 @@ void PID_Init(void) {
   config.speedRightConfig.iFactor100 = config.speedLeftConfig.iFactor100;
   config.speedRightConfig.dFactor100 = config.speedLeftConfig.dFactor100;
   config.speedRightConfig.iAntiWindup = config.speedLeftConfig.iAntiWindup;
+  config.speedRightConfig.maxSpeedPercent = config.speedLeftConfig.maxSpeedPercent;		//
   config.speedRightConfig.lastError = 0;
   config.speedRightConfig.integral = 0;
 
-  config.lineFwConfig.pFactor100 = 0;
+  config.lineFwConfig.pFactor100 = 10000;
   config.lineFwConfig.iFactor100 = 0;
   config.lineFwConfig.dFactor100 = 0;
   config.lineFwConfig.iAntiWindup = 0;
-  config.lineFwConfig.maxSpeedPercent = 0;
+  config.lineFwConfig.maxSpeedPercent = 30;
   config.lineFwConfig.lastError = 0;
   config.lineFwConfig.integral = 0;
 
-  config.posLeftConfig.pFactor100 = 0;
+  config.posLeftConfig.pFactor100 = 500;
   config.posLeftConfig.iFactor100 = 0;
   config.posLeftConfig.dFactor100 = 0;
   config.posLeftConfig.iAntiWindup = 0;
-  config.posLeftConfig.maxSpeedPercent = 0;
+  config.posLeftConfig.maxSpeedPercent = 30;
   config.posLeftConfig.lastError = 0;
   config.posLeftConfig.integral = 0;
   config.posRightConfig.pFactor100 = config.posLeftConfig.pFactor100;

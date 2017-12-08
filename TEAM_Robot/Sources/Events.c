@@ -73,7 +73,8 @@ void Cpu_OnNMIINT(void)
 */
 void QuadInt_OnInterrupt(void)
 {
-  /* Write your code here ... */
+  Q4CLeft_Sample();
+  Q4CRight_Sample();
 }
 
 /*
@@ -94,6 +95,7 @@ void TI1_OnInterrupt(void)
 {
   /* Write your code here ... */
 	TMR_OnInterrupt();
+	TACHO_Sample();
 }
 
 /*
