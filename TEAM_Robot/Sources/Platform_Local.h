@@ -42,7 +42,7 @@
 //#define PL_LOCAL_CONFIG_HAS_SHELL_QUEUE_DISABLED          /* disable shell queue */
 //#define PL_LOCAL_CONFIG_HAS_SQUEUE_SINGLE_CHAR_DISABLED   /* disable single character support in shell queue */
 //#define PL_LOCAL_CONFIG_HAS_SEMAPHORE_DISABLED            /* disable semaphore test module */
-#define PL_LOCAL_CONFIG_HAS_CONFIG_NVM_DISABLED           /* disable NVM storage */
+//#define PL_LOCAL_CONFIG_HAS_CONFIG_NVM_DISABLED           /* disable NVM storage */
 
 /* remote controller hardware functionality */
 #define PL_LOCAL_CONFIG_HAS_RADIO_DISABLED                /* disable Radio transceiver */
@@ -67,8 +67,8 @@
 //#define PL_LOCAL_CONFIG_HAS_DRIVE_DISABLED                /* disable drive module */
 //#define PL_LOCAL_CONFIG_HAS_LINE_FOLLOW_DISABLED          /* disable line following */
 
-#define PL_LOCAL_CONFIG_HAS_DISTANCE_DISABLED             /* disabling distance sensors */
-#define PL_LOCAL_CONFIG_HAS_TOF_SENSOR_DISABLED           /* disabling ToF sensors */
+//#define PL_LOCAL_CONFIG_HAS_DISTANCE_DISABLED             /* disabling distance sensors */
+//#define PL_LOCAL_CONFIG_HAS_TOF_SENSOR_DISABLED           /* disabling ToF sensors */
 
 //#define PL_LOCAL_CONFIG_HAS_TURN_DISABLED                 /* disable turning module */
 #define PL_LOCAL_CONFIG_HAS_LINE_MAZE_DISABLED            /* disable maze solving */
